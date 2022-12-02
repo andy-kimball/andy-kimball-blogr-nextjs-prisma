@@ -11,8 +11,8 @@ import prisma from '../lib/prisma';
 
 // index.tsx
 export const getStaticProps: GetStaticProps = async () => {
-  const file = path.join(process.cwd(), 'test.txt');
-  const data = readFileSync(file, 'utf8');
+  //const file = path.join(process.cwd(), 'test.txt');
+  const data = readFileSync('test.txt', 'utf8');
 
   return {
     props: {
