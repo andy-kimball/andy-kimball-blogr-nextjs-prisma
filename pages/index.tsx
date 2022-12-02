@@ -3,22 +3,34 @@ import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 
+import { readFileSync } from 'fs';
+import path from 'path';
+
 // pages/index.tsx
 import prisma from '../lib/prisma';
 
 // index.tsx
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
+  const file = path.join(process.cwd(), 'test.txt');
+  const data = readFileSync(file, 'utf8');
+
   return {
-    props: { feed },
-    revalidate: 10,
+    props: {
+      feed: [{author: {name: data}}],
+    },
   };
+  //
+  // const feed = await prisma.post.findMany({
+  //   include: {
+  //     author: {
+  //       select: { name: true },
+  //     },
+  //   },
+  // });
+  // return {
+  //   props: { feed },
+  //   revalidate: 10,
+  // };
 };
 
 type Props = {
